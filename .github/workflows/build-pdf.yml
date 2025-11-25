@@ -1,0 +1,66 @@
+name: Build PDF
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pandoc + LaTeX
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-latex-recommended texlive-fonts-recommended texlive-latex-extra python3-yaml
+
+      - name: Build PDF
+        run: |
+          mkdir -p dist
+          python3 << 'EOF'
+          import yaml
+          import subprocess
+          import glob
+          import os
+          
+          with open('HANDBOOK.yaml') as f:
+              cfg = yaml.safe_load(f)
+          
+          # Auto-discover all markdown files in docs/ and subdirectories
+          all_files = []
+          all_files.extend(sorted(glob.glob('docs/*.md')))
+          for subdir in sorted(glob.glob('docs/*/')):
+              all_files.extend(sorted(glob.glob(os.path.join(subdir, '*.md'))))
+          
+              cmd = [
+                  'pandoc',
+                  '-V', 'geometry:margin=1in',
+                  '-M', f'title={cfg["title"]}',
+                  '-M', f'author={cfg["author"]}',
+                  '-o', 'dist/the-typescript-handbook.pdf'
+              ] + all_files
+          
+          print('Including files:', all_files)
+          subprocess.run(cmd, check=True)
+          EOF
+
+      - name: Upload artifact (PDF)
+        uses: actions/upload-artifact@v4
+        with:
+          name: the-typescript-handbook-pdf
+          path: dist/the-typescript-handbook.pdf
+          retention-days: 30
+
+      - name: Commit PDF back to repo
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: |
+          if [ -n "$(git status --porcelain dist/the-typescript-handbook.pdf 2>/dev/null)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add dist/the-typescript-handbook.pdf
+            git commit -m "chore(pdf): update the-typescript-handbook.pdf"
+            git push
+          fi
