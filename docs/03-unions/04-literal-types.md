@@ -12,7 +12,7 @@ function move(direction: string) {
 }
 ```
 
-This accepts *any* string — "north", "south", "invalid", "😀" — which is too permissive. We need to narrow the possible values.
+This accepts *any* string — "north", "south", "invalid", "anything" — which is too permissive. We need to narrow the possible values.
 
 ## The Solution: Literal Types
 
