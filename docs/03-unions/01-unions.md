@@ -5,9 +5,9 @@ Union types let you specify that a value can be one of several types. Use the pi
 ```ts
 // userId is a string OR a number
 let userId: string | number;
-userId = "user_42";  // ✓ valid
-userId = 42;         // ✓ valid
-userId = true;       // ✗ error
+userId = "user_42";  // valid
+userId = 42;         // valid
+userId = true;       // error
 ```
 
 ## Type Narrowing
