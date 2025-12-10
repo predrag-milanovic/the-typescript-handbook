@@ -35,13 +35,13 @@ jobs:
           for subdir in sorted(glob.glob('docs/*/')):
               all_files.extend(sorted(glob.glob(os.path.join(subdir, '*.md'))))
           
-              cmd = [
-                  'pandoc',
-                  '-V', 'geometry:margin=1in',
-                  '-M', f'title={cfg["title"]}',
-                  '-M', f'author={cfg["author"]}',
-                  '-o', 'dist/the-typescript-handbook.pdf'
-              ] + all_files
+          cmd = [
+              'pandoc',
+              '-V', 'geometry:margin=1in',
+              '-M', f'title={cfg["title"]}',
+              '-M', f'author={cfg["author"]}',
+              '-o', 'dist/the-typescript-handbook.pdf'
+          ] + all_files
           
           print('Including files:', all_files)
           subprocess.run(cmd, check=True)
