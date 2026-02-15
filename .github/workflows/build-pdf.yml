@@ -37,6 +37,7 @@ jobs:
           
           cmd = [
               'pandoc',
+              '--pdf-engine=xelatex',
               '-V', 'geometry:margin=1in',
               '-M', f'title={cfg["title"]}',
               '-M', f'author={cfg["author"]}',
