@@ -15,7 +15,7 @@ jobs:
       - name: Install pandoc + LaTeX
         run: |
           sudo apt-get update
-          sudo apt-get install -y pandoc texlive-latex-recommended texlive-fonts-recommended texlive-latex-extra python3-yaml
+          sudo apt-get install -y pandoc texlive-latex-recommended texlive-fonts-recommended texlive-latex-extra texlive-xetex python3-yaml
 
       - name: Build PDF
         run: |
@@ -37,6 +37,7 @@ jobs:
           
           cmd = [
               'pandoc',
+              '--pdf-engine=xelatex',
               '-V', 'geometry:margin=1in',
               '-M', f'title={cfg["title"]}',
               '-M', f'author={cfg["author"]}',
