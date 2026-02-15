@@ -37,7 +37,7 @@ This type says:
 
 ## Best Practices
 
-⚠️ **Avoid overusing this pattern.** Only use dynamic keys when you truly need unknown keys. If you have optional properties, use the `?` operator instead:
+**Avoid overusing this pattern.** Only use dynamic keys when you truly need unknown keys. If you have optional properties, use the `?` operator instead:
 
 ```ts
 // ✓ Prefer this for known optional properties

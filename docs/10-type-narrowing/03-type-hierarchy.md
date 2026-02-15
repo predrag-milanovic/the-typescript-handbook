@@ -2,8 +2,6 @@
 
 All types in TypeScript can be arranged into a hierarchy. Understanding this hierarchy is fundamental to mastering type narrowing and type safety.
 
-![TypeScript Type Hierarchy](./type-hierarchy.png)
-
 ## Understanding the Hierarchy
 
 The diagram above illustrates how TypeScript types are organized:
