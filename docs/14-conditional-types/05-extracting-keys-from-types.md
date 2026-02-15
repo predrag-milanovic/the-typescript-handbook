@@ -1,6 +1,6 @@
 ## Extracting keys from types
 
-Mapped types dont just let you build new object types  you can also use them together with conditional types to _extract_ keys that match some condition.
+Mapped types don't just let you build new object types – you can also use them together with conditional types to _extract_ keys that match some condition.
 
 Start with a simple object type:
 
@@ -38,7 +38,7 @@ type Keys = StringKeyUnion<Soldier>;
 //    ^? "name" | "branch"
 ```
 
-This pattern  _"map, then index"   is a common way to use conditional and mapped types together:
+This pattern – _"map, then index"_ – is a common way to use conditional and mapped types together:
 
 - The mapped type `StringKeys<T>` walks over every property key `K` in `T` and conditionally keeps it or replaces it with `never`.
 - Indexing with `keyof T` (`StringKeys<T>[keyof T]`) collects all of those property values into a single union.
